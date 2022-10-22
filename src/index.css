@@ -20,6 +20,10 @@ body,
   font-family: 'Source Sans Pro', system-ui;
 }
 
+.content {
+  overflow-y: auto;
+}
+
 .app {
   display: flex;
   position: relative;

@@ -10,12 +10,10 @@ import {
   List,
   ListItem,
   ListItemText,
-  useTheme,
-  selectClasses,
+  useTheme
 } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
-import { borderRadius } from "@mui/system";
 
 const Calendar = () => {
   const theme = useTheme();
@@ -42,7 +40,7 @@ const Calendar = () => {
   const handleEventClick = (selected) => {
     if (
       window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}' `
+        `Are you sure you want to delete the event '${selected.event.title}'`
       )
     ) {
       selected.event.remove();
@@ -52,7 +50,8 @@ const Calendar = () => {
   return (
     <Box m="20px">
       <Header title="CALENDAR" subtitle="Mange your work with calendar" />
-      <Box display="flex" justifyContent="space-between">
+
+      <Box mt="20px" display="flex" justifyContent="space-between">
         <Box
           flex="1 1 20%"
           backgroundColor={colors.primary[400]}
@@ -61,8 +60,8 @@ const Calendar = () => {
         >
           <Typography variant="h5">Events</Typography>
           <List>
-            {currentEvents.map((event) => {
-              <ListItem
+            {currentEvents.map((event) => (
+                <ListItem
                 key={event.id}
                 sx={{
                   backgroundColor: colors.greenAccent[500],
@@ -80,10 +79,39 @@ const Calendar = () => {
                         day: "numeric",
                       })}
                     </Typography>
-                  } />
-              </ListItem>;
-            })}
+                  }
+                />
+              </ListItem>
+            ))}
           </List>
+        </Box>
+        <Box flex="1 1 100%" ml="15px">
+          <FullCalendar
+            height="75vh"
+            plugins={[
+              dayGridPlugin,
+              timeGridPlugin,
+              listPlugin,
+              interactionPlugin,
+            ]}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
+            }}
+            initialView="dayGridMonth"
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            select={handleDateClick}
+            eventClick={handleEventClick}
+            eventsSet={(events) => setCurrentEvents(events)}
+            initialEvents={[
+                {id: '124', title:'All-day Event', date: '2022-10-23'},
+                {id: '125', title:'All-day Event', date: '2022-10-24'}
+            ]}
+          />
         </Box>
       </Box>
     </Box>
